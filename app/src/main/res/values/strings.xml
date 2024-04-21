@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Receptek</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="email">Email</string>
+    <string name="passw">Jelszo</string>
+    <string name="login">Belépés</string>
+    <string name="register_instead">Regisztrálj inkább</string>
+    <string name="register">Regisztráció</string>
+    <string name="logininstead">Belépés inkább</string>
+    <string name="firstname">Keresztnév</string>
+    <string name="lastname">Vezetéknév</string>
+    <string name="passwagain">Jelszó ismét</string>
+    <string name="picdesc">egy képe</string>
+    <string name="ingredients">Hozzávalók:</string>
+    <string name="steps">Elkészítés lépései</string>
+    <string name="share_review">Oszd meg véleményed!</string>
+    <string name="norecipeyet">Még nincs recepted!</string>
+    <string name="recipename">A recept neve</string>
+    <string name="pictureoffood">Kép az ételről</string>
+</resources>
