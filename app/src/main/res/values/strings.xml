@@ -22,4 +22,9 @@
     <string name="norecipeyet">Még nincs recepted!</string>
     <string name="recipename">A recept neve</string>
     <string name="pictureoffood">Kép az ételről</string>
+    <string name="submit">Beküldés</string>
+    <string name="ingredient_name">Hozzávaló neve</string>
+    <string name="amount">Mennyiség</string>
+    <string name="unit">Mértékegyegység</string>
+    <string name="step_description">Lépés leírása</string>
 </resources>

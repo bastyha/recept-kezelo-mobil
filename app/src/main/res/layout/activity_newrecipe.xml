@@ -2,71 +2,102 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/recipename">
-         <com.google.android.material.textfield.TextInputEditText
-             android:id="@+id/recipeName"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <TimePicker
-        android:id="@+id/timeInMinutes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
+        android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ingredients"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredients"
+            android:hint="@string/recipename">
+             <com.google.android.material.textfield.TextInputEditText
+                 android:id="@+id/recipeName"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <TimePicker
+            android:id="@+id/timeInMinutes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+
+            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingredients"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:onClick="addIngredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/steps"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:onClick="addStep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <Button
+                android:onClick="selectPic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pictureoffood"
+
+                />
+            <ImageView
+                android:id="@+id/pictureToBeUploaded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/add"/>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/steps"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/steps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add"/>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/picUplader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/pictureoffood"/>
-        <ImageView
-            android:id="@+id/pictureToBeUploaded"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            android:text="@string/submit"
+            android:onClick="submit"
+            />
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

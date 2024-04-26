@@ -3,10 +3,10 @@ package com.recept_kezelo_mobil.models;
 //a recipehez szukseges
 public class Ingredient{
     private String nameOfIngredient;
-    private String amount;
+    private double amount;
     private String unit;
 
-    public Ingredient(String nameOfIngredient, String amount, String unit) {
+    public Ingredient(String nameOfIngredient, double amount, String unit) {
         this.nameOfIngredient = nameOfIngredient;
         this.amount = amount;
         this.unit = unit;
@@ -23,12 +23,12 @@ public class Ingredient{
         this.nameOfIngredient = nameOfIngredient;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
     public void setAmount(double amount) {
-        this.amount = String.valueOf(amount);
+        this.amount = amount;
     }
 
     public String getUnit() {
