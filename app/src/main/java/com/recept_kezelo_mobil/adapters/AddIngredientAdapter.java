@@ -1,11 +1,13 @@
 package com.recept_kezelo_mobil.adapters;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +23,11 @@ import java.util.ArrayList;
 public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdapter.AddIngredientHolder>{
 
     ArrayList<Ingredient> models;
+    Context mContext;
 
-    public AddIngredientAdapter(ArrayList<Ingredient> models) {
+    public AddIngredientAdapter(Context context,  ArrayList<Ingredient> models) {
         this.models = models;
+        mContext=context;
     }
 
     @NonNull
@@ -37,6 +41,7 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
     @Override
     public void onBindViewHolder(@NonNull AddIngredientHolder holder, int position) {
         Ingredient model = models.get(holder.getBindingAdapterPosition());
+
 
         holder.ingredientName.setText( model.getNameOfIngredient());
         holder.ingredientName.addTextChangedListener(new TextWatcher() {
@@ -56,9 +61,9 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
                 Log.d("textChange", models.get(holder.getBindingAdapterPosition()).getNameOfIngredient());
             }
         });
-        if(model.getAmount()!=0){
-            holder.amount.setText(String.valueOf( model.getAmount()));
-        }
+
+        holder.amount.setText(String.valueOf( model.getAmount()));
+
         holder.amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,7 +77,7 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
 
             @Override
             public void afterTextChanged(Editable s) {
-                models.get(holder.getBindingAdapterPosition()).setAmount(Double.parseDouble(holder.amount.getText().toString()));
+                models.get(holder.getBindingAdapterPosition()).setAmount(!holder.amount.getText().toString().equals("") ? Double.parseDouble(holder.amount.getText().toString()):0);
                 Log.d("textChange", String.valueOf(models.get(holder.getBindingAdapterPosition()).getAmount()));
             }
         });
@@ -94,7 +99,7 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
                 Log.d("textChange", models.get(holder.getBindingAdapterPosition()).getUnit());
             }
         });
-        //TODO: make it a listview instead
+
     }
 
     @Override
@@ -121,12 +126,15 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
     }
 
     public void removeItem(int position){
+
         models.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, models.size());
 
     }
     public void addItem(@Nullable Ingredient item){
+
+
         if(item==null){
             models.add(new Ingredient());
         }else {

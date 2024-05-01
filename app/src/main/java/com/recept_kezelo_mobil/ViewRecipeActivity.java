@@ -111,8 +111,13 @@ public class ViewRecipeActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
 
-                        onSreen = task.getResult().toObjects(Recipe.class).get(0);
+                        ArrayList<Recipe> onSreens = (ArrayList<Recipe>) task.getResult().toObjects(Recipe.class);
+                        if(onSreens.size()>0){
 
+                            onSreen=onSreens.get(0);
+                        }else{
+                            Log.d("ViewRecipe", "Recipe not found");
+                        }
                         if (onSreen.getImage_id()==null || Objects.equals(onSreen.getImage_id(), "")){
                             image.setVisibility(View.GONE);
                         }else {

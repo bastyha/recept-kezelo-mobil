@@ -34,7 +34,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepHolder> {
     @Override
     public void onBindViewHolder(@NonNull StepHolder holder, int position) {
         Step model = models.get(position);
-        holder.stepNumber.setText(position+".");
+        holder.stepNumber.setText(position+1+".");
         holder.stepDescription.setText(model.getStepDescription());
     }
 
