@@ -59,10 +59,10 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         } else if (itemId == R.id.newrecipe) {
             startActivity(new Intent(this, NewRecipeActivity.class));
-            finish();
+
         } else if (itemId == R.id.ownrecipe) {
             startActivity(new Intent(this, OwnRecipeActivity.class));
-            finish();
+
         }
         return true;
     }
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         TextInputEditText passw = findViewById(R.id.passwordET);
         if(emal.getText()!=null&& passw.getText()!=null){
             mAuth.signInWithEmailAndPassword(emal.getText().toString(),
-                                                    emal.getText().toString())
+                                                    passw.getText().toString())
                     .addOnCompleteListener(this, task-> {
 
                             if(task.isSuccessful()){

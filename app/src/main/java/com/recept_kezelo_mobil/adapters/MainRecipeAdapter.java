@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,7 +67,6 @@ public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.Re
             Intent viewRecipe = new Intent(mContext, ViewRecipeActivity.class);
             viewRecipe.putExtra("RECIPE", model.getId());
             mContext.startActivity(viewRecipe);
-
         });
 
     }

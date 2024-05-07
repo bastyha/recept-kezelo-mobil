@@ -6,13 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.GridView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,9 +23,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.recept_kezelo_mobil.adapters.MainRecipeAdapter;
 import com.recept_kezelo_mobil.models.Recipe;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recipesRV;
@@ -52,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else if (itemId == R.id.newrecipe) {
             startActivity(new Intent(this, NewRecipeActivity.class));
-            finish();
+
         } else if (itemId == R.id.ownrecipe) {
             startActivity(new Intent(this, OwnRecipeActivity.class));
-            finish();
+
         }
         return true;
     }
@@ -84,8 +86,15 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("RecipeAdd", "onCreate: ",task.getException() );
                     }
                 });
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-
+        Intent intent = new Intent(this, CustomReceiver.class);
+        PendingIntent pendingIntent  = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,11);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
     }
 }

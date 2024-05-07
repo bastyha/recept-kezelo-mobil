@@ -11,14 +11,18 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.gson.Gson;
+import com.recept_kezelo_mobil.NewRecipeActivity;
 import com.recept_kezelo_mobil.OwnRecipeActivity;
 import com.recept_kezelo_mobil.R;
+import com.recept_kezelo_mobil.ViewRecipeActivity;
 import com.recept_kezelo_mobil.models.Ingredient;
 import com.recept_kezelo_mobil.models.Picture;
 import com.recept_kezelo_mobil.models.Recipe;
@@ -73,7 +77,13 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
         holder.steps.setAdapter(stepAdapter);
         holder.steps.setLayoutManager(new LinearLayoutManager(mContext));
 
-        holder.modify.setOnClickListener(v -> {});
+        holder.modify.setOnClickListener(v -> {
+            Intent modifyRecipe = new Intent(mContext, NewRecipeActivity.class);
+            modifyRecipe.putExtra("RECIPE", new Gson().toJson(model));
+            mContext.startActivity(modifyRecipe);
+            ((AppCompatActivity) mContext).finish();
+
+        });
         holder.delete.setOnClickListener(v -> {
             if(!Objects.equals(model.getImage_id(), "")){
                 mFFst.collection("Images")
@@ -113,7 +123,7 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
                     } );
             mFFst.collection("Recipes").document(model.getId()).delete().addOnFailureListener(Throwable::printStackTrace);
             mContext.startActivity(new Intent(mContext, OwnRecipeActivity.class));
-
+            ((AppCompatActivity) mContext).finish();
         });
 
     }

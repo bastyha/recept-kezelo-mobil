@@ -52,10 +52,10 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         } else if (itemId == R.id.newrecipe) {
             startActivity(new Intent(this, NewRecipeActivity.class));
-            finish();
+
         } else if (itemId == R.id.ownrecipe) {
             startActivity(new Intent(this, OwnRecipeActivity.class));
-            finish();
+
         }
         return true;
     }

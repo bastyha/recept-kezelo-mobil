@@ -61,10 +61,10 @@ public class ViewRecipeActivity extends AppCompatActivity {
             finish();
         } else if (itemId == R.id.newrecipe) {
             startActivity(new Intent(this, NewRecipeActivity.class));
-            finish();
+
         } else if (itemId == R.id.ownrecipe) {
             startActivity(new Intent(this, OwnRecipeActivity.class));
-            finish();
+
         }
         return true;
     }
@@ -104,7 +104,10 @@ public class ViewRecipeActivity extends AppCompatActivity {
         mSU = new ServerUtil();
 
         String recipeId = getIntent().getStringExtra("RECIPE");
-
+        if(recipeId==null){
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }
         mFFst.collection("Recipes")
                 .whereEqualTo("id", recipeId )
                 .get()
