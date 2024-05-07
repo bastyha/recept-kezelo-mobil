@@ -22,10 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.recept_kezelo_mobil.models.Name;
 import com.recept_kezelo_mobil.models.User;
+import com.recept_kezelo_mobil.serverhandlers.UserHandler;
 
 public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
-    FirebaseFirestore mFFst;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -65,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        mFFst = FirebaseFirestore.getInstance();
         if (mAuth.getCurrentUser()!=null){
             finish();
         }
@@ -90,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                             model.setEmail(email.toString());
                             model.setId(task.getResult().getUser().getUid());
 
-                            mFFst.collection("Users").document(model.getId()).set(model)
+                            UserHandler.create(model)
                                     .addOnCompleteListener(this, task1 -> {
                                         if(task1.isSuccessful()){
 

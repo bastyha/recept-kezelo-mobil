@@ -43,6 +43,8 @@ import com.recept_kezelo_mobil.models.Ingredient;
 import com.recept_kezelo_mobil.models.Picture;
 import com.recept_kezelo_mobil.models.Recipe;
 import com.recept_kezelo_mobil.models.Step;
+import com.recept_kezelo_mobil.serverhandlers.PictureHandler;
+import com.recept_kezelo_mobil.serverhandlers.RecipeHandler;
 import com.recept_kezelo_mobil.serverhandlers.ServerUtil;
 import com.squareup.picasso.Picasso;
 
@@ -94,8 +96,8 @@ public class NewRecipeActivity extends AppCompatActivity {
     Uri picUri;
 
     ServerUtil mSU;
-    FirebaseFirestore mFFst;
-    FirebaseStorage mFS;
+
+
     Recipe base;
 
     boolean store = true;
@@ -113,8 +115,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newrecipe);
         mSU = new ServerUtil();
-        mFFst = FirebaseFirestore.getInstance();
-        mFS  = FirebaseStorage.getInstance();
+
         store = true;
         SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         String recipe_from_pref = sharedPreferences.getString("RECIPE", null);
@@ -128,8 +129,6 @@ public class NewRecipeActivity extends AppCompatActivity {
         }else{
             base = null;
         }
-
-
 
         recipeName = findViewById(R.id.recipeName);
         timeInMinutes = findViewById(R.id.timeInMinutes);
@@ -260,42 +259,35 @@ public class NewRecipeActivity extends AppCompatActivity {
 
 
         Recipe toDB = new Recipe();
-        if(base==null){
-
-            toDB.setId(mFFst.collection("Recipes").document().getId());
-        }else{
-            toDB.setId(base.getId());
-        }
         toDB.setName(name);
         toDB.setTimeInMinutes(time);
         toDB.setOwner(FirebaseAuth.getInstance().getCurrentUser().getUid());
         toDB.setIngredients(ingredients1);
         toDB.setSteps(steps1);
+
         if(picUri!=null){
             Picture picture = new Picture();
-            if(base==null ||base.getImage_id().equals("")){
-
-            picture.setId(mFFst.collection("Images").document().getId());
-            }else{
-                picture.setId(base.getImage_id());
-            }
             picture.setUploader(FirebaseAuth.getInstance().getCurrentUser().getUid());
             picture.setExtension(mSU.getMimeType(this, picUri));
-            toDB.setImage_id(picture.getId());
-            mFFst.collection("Images")
-                    .document(picture.getId())
-                    .set(picture)
-                    .addOnFailureListener(Throwable::printStackTrace);
-            mFS.getReference()
-                    .child("images/"+picture.getId()+"."+picture.getExtension())
-                    .putFile(picUri)
-                    .addOnFailureListener(Throwable::printStackTrace);
+            if(base==null ||base.getImage_id().equals("")){
+                toDB.setImage_id(PictureHandler.create(picture, picUri));
+            }else{
+                picture.setId(base.getImage_id());
+                toDB.setImage_id(PictureHandler.update(picture, picUri));
+            }
+
         }else if(base==null ||base.getImage_id().equals("")){
             toDB.setImage_id("");
         }
-        mFFst.collection("Recipes")
-                .document(toDB.getId())
-                .set(toDB)
+
+        if(base==null){
+
+            toDB.setId("");
+        }else{
+            toDB.setId(base.getId());
+
+        }
+        RecipeHandler.create(toDB)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         store=false;

@@ -8,20 +8,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.recept_kezelo_mobil.adapters.MainRecipeAdapter;
 import com.recept_kezelo_mobil.models.Recipe;
+import com.recept_kezelo_mobil.serverhandlers.RecipeHandler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,9 +66,7 @@ public class MainActivity extends AppCompatActivity {
         recipesRV = findViewById(R.id.recipes);
         ArrayList<Recipe> recipesList = new ArrayList<>();
 
-        FirebaseFirestore.getInstance()
-                .collection("Recipes")
-                .get()
+        RecipeHandler.readAll()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         for(QueryDocumentSnapshot documentSnapshot: task.getResult()){

@@ -26,17 +26,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class  ServerUtil {
-    private FirebaseFirestore mFFst;
-    private FirebaseStorage mFS;
+
     public ServerUtil(){
-        mFFst= FirebaseFirestore.getInstance();
-        mFS = FirebaseStorage.getInstance();
     }
 
     public void putNameInView(String guysid, TextView v){
-        mFFst.collection("Users")
-                .whereEqualTo("id", guysid)
-                .get()
+        UserHandler.readForId(guysid)
                 .addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()){
                         User usr = task1.getResult().toObjects(User.class).get(0);
@@ -48,10 +43,7 @@ public class  ServerUtil {
                 });
     }
     public void fillReviewRecycler(String idOfRecipe, RecyclerView rv){
-        mFFst.collection("Reviews")
-                .whereEqualTo("recipe", idOfRecipe)
-                .orderBy("date", Query.Direction.DESCENDING)
-                .get()
+        ReviewHandler.readForRecipe(idOfRecipe)
                 .addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()){
                         ArrayList<Review> reviews1 = (ArrayList<Review>) task1.getResult().toObjects(Review.class);
@@ -70,18 +62,14 @@ public class  ServerUtil {
 
     public void getDownloadUrl(String imageId, ImageView pic) {
 
-        mFFst.collection("Images")
-                .whereEqualTo("id", imageId)
-                .get()
+        PictureHandler.readPicture(imageId)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         Picture image;
                         image = task.getResult().toObjects(Picture.class).get(0);
 
 
-                        FirebaseStorage.getInstance()
-                                .getReference()
-                                .child("images/"+image.getId()+"."+image.getExtension()).getDownloadUrl()
+                        PictureHandler.readDownloadUri(image)
                                 .addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()){
                                         Uri downloadUrl = task1.getResult();

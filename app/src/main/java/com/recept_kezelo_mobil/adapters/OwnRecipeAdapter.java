@@ -28,6 +28,9 @@ import com.recept_kezelo_mobil.models.Picture;
 import com.recept_kezelo_mobil.models.Recipe;
 import com.recept_kezelo_mobil.models.Review;
 import com.recept_kezelo_mobil.models.Step;
+import com.recept_kezelo_mobil.serverhandlers.PictureHandler;
+import com.recept_kezelo_mobil.serverhandlers.RecipeHandler;
+import com.recept_kezelo_mobil.serverhandlers.ReviewHandler;
 import com.recept_kezelo_mobil.serverhandlers.ServerUtil;
 
 import java.util.ArrayList;
@@ -38,14 +41,12 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
     private ArrayList<Recipe> models;
     private Context mContext;
     private ServerUtil mSU;
-    private FirebaseFirestore mFFst;
-    private FirebaseStorage mFS;
+
     public OwnRecipeAdapter(Context context, ArrayList<Recipe> recipes) {
         this.models = recipes;
         mContext=context;
         mSU = new ServerUtil();
-        mFFst=FirebaseFirestore.getInstance();
-        mFS = FirebaseStorage.getInstance();
+
     }
 
     @NonNull
@@ -85,43 +86,8 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
 
         });
         holder.delete.setOnClickListener(v -> {
-            if(!Objects.equals(model.getImage_id(), "")){
-                mFFst.collection("Images")
-                        .whereEqualTo("id", model.getImage_id())
-                        .get()
-                        .addOnCompleteListener(pictureObj->{
-                            if (pictureObj.isSuccessful()){
-                                if(pictureObj.getResult().toObjects(Picture.class).size()>0) {
-                                    Picture picture = pictureObj.getResult().toObjects(Picture.class).get(0);
+            RecipeHandler.delete(model);
 
-                                    mFS.getReference().child("images/" + picture.getId() + "." + picture.getExtension()).delete().addOnFailureListener(Throwable::printStackTrace);
-                                    mFFst.collection("Images").document(picture.getId()).delete().addOnFailureListener(Throwable::printStackTrace);
-                                }
-                            }else {
-                                pictureObj.getException().printStackTrace();
-                            }
-                        });
-            }
-            mFFst.collection("Reviews")
-                    .whereEqualTo("recipe", model.getId())
-                    .get()
-                    .addOnCompleteListener(getReviews ->{
-                        if (getReviews.isSuccessful()){
-                            List<Review> reviews = getReviews.getResult().toObjects(Review.class);
-                            if(reviews.size()>0){
-                                for(Review review :reviews){
-                                    mFFst.collection("Reviews")
-                                            .document(review.getId())
-                                            .delete()
-                                            .addOnFailureListener(Throwable::printStackTrace);
-                                }
-                            }
-
-                        }else {
-                            getReviews.getException().printStackTrace();
-                        }
-                    } );
-            mFFst.collection("Recipes").document(model.getId()).delete().addOnFailureListener(Throwable::printStackTrace);
             mContext.startActivity(new Intent(mContext, OwnRecipeActivity.class));
             ((AppCompatActivity) mContext).finish();
         });

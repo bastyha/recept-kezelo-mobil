@@ -28,6 +28,8 @@ import com.recept_kezelo_mobil.models.Ingredient;
 import com.recept_kezelo_mobil.models.Recipe;
 import com.recept_kezelo_mobil.models.Review;
 import com.recept_kezelo_mobil.models.Step;
+import com.recept_kezelo_mobil.serverhandlers.RecipeHandler;
+import com.recept_kezelo_mobil.serverhandlers.ReviewHandler;
 import com.recept_kezelo_mobil.serverhandlers.ServerUtil;
 
 import java.util.ArrayList;
@@ -79,8 +81,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
     private Editable reviewText;
     private LinearLayout addComment;
 
-    private FirebaseFirestore mFFst;
-    private FirebaseStorage mFS;
     private ServerUtil mSU;
     private Recipe onSreen;
 
@@ -99,8 +99,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
         reviewText = ((TextInputEditText) findViewById(R.id.reviewText)).getText();
         addComment = findViewById(R.id.addComment);
 
-        mFFst = FirebaseFirestore.getInstance();
-        mFS = FirebaseStorage.getInstance();
         mSU = new ServerUtil();
 
         String recipeId = getIntent().getStringExtra("RECIPE");
@@ -108,9 +106,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
             startActivity(new Intent(this,MainActivity.class));
             finish();
         }
-        mFFst.collection("Recipes")
-                .whereEqualTo("id", recipeId )
-                .get()
+        RecipeHandler.readById(recipeId)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
 
@@ -168,12 +164,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
             toDB.setReviewer(FirebaseAuth.getInstance().getCurrentUser().getUid());
             toDB.setDate(new Date().getTime());
             toDB.setText(reviewText.toString());
-            toDB.setId(mFFst.collection("Review").document().getId());
 
-            mFFst.collection("Reviews")
-                    .document(toDB.getId())
-                    .set(toDB)
-                    .addOnCompleteListener(task -> {
+            ReviewHandler.create(toDB).addOnCompleteListener(task -> {
                        if (task.isSuccessful()){
                            mSU.fillReviewRecycler(onSreen.getId(), reviews);
                            reviewText.clear();

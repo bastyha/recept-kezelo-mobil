@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.recept_kezelo_mobil.adapters.OwnRecipeAdapter;
 import com.recept_kezelo_mobil.models.Recipe;
+import com.recept_kezelo_mobil.serverhandlers.RecipeHandler;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,7 @@ public class OwnRecipeActivity extends AppCompatActivity {
         return true;
     }
 
-    private FirebaseFirestore mFFst;
+
     private ArrayList<Recipe> recipesList=new ArrayList<>();
     private RecyclerView recipes;
     private TextView norecipes;
@@ -64,13 +65,10 @@ public class OwnRecipeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ownrecipe);
-        mFFst = FirebaseFirestore.getInstance();
 
         recipes = findViewById(R.id.recipes);
         norecipes = findViewById(R.id.norecipe);
-        mFFst.collection("Recipes")
-                .whereEqualTo("owner", FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .get()
+        RecipeHandler.readByLoggedInUser()
                 .addOnCompleteListener(recipeTask->{
                    if (recipeTask.isSuccessful()){
                        recipesList= (ArrayList<Recipe>) recipeTask.getResult().toObjects(Recipe.class);
