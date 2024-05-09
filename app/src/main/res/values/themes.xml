@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ReceptKezeloMobil" parent="Theme.AppCompat">
+    <style name="Base.Theme.ReceptKezeloMobil" parent="Theme.AppCompat.Light">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAlignment">center</item>
+
     </style>
 
-    <style name="Theme.ReceptKezeloMobil" parent="Base.Theme.ReceptKezeloMobil" />
+    <style name="Theme.ReceptKezeloMobil" parent="Base.Theme.ReceptKezeloMobil" >
+
+    </style>
+
 </resources>

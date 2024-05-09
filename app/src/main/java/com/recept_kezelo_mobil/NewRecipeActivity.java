@@ -151,7 +151,12 @@ public class NewRecipeActivity extends AppCompatActivity {
             addIngredientAdapter = new AddIngredientAdapter(this, (ArrayList<Ingredient>) base.getIngredients());
         }
         ingredients.setAdapter(addIngredientAdapter);
-        ingredients.setLayoutManager(new LinearLayoutManager(this));
+        ingredients.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         steps = findViewById(R.id.steps);
         AddStepAdapter addStepAdapter;
@@ -161,7 +166,12 @@ public class NewRecipeActivity extends AppCompatActivity {
             addStepAdapter  = new AddStepAdapter((ArrayList<Step>) base.getSteps());
         }
         steps.setAdapter(addStepAdapter);
-        steps.setLayoutManager(new LinearLayoutManager(this));
+        steps.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
 
         pictureToBeUploaded = findViewById(R.id.pictureToBeUploaded);

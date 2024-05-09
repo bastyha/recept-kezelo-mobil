@@ -5,4 +5,11 @@
     <color name="orange">#FFA000</color>
     <color name="purple">#6200EA</color>
     <color name="step">#1E88E5</color>
+    <color name="red">#D32F2F</color>
+    <color name="lightpurp">#36CE93D8</color>
+    <color name="lightpurp2">#9EE91E63</color>
+    <color name="grey">#666</color>
+    <color name="steppurp">#65ce93d8</color>
+    <color name="review_orange">#8ef57b00</color>
+    <color name="review_orange1">#8EF55600</color>
 </resources>

@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp"
+
+        >
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/recipename">
+            android:hint="@string/recipename"
+            android:layout_margin="@dimen/newrecmerg">
              <com.google.android.material.textfield.TextInputEditText
                  android:id="@+id/recipeName"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:inputType="text"/>
+                 android:inputType="text"
+                 android:textAlignment="viewStart"
+                 />
         </com.google.android.material.textfield.TextInputLayout>
         <TimePicker
             android:id="@+id/timeInMinutes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:timePickerMode="spinner"
-
+            android:layout_margin="10dp"
+            android:textColor="@color/black"
             />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/newrecmerg"
+            android:elevation="@dimen/newrecmerg"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/newrecmerg"
+                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/newrecmerg"
                     android:text="@string/ingredients"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingredients"
@@ -41,8 +55,11 @@
                     android:layout_height="wrap_content"/>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:onClick="addIngredient"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/orange"
+                    app:borderWidth="0dp"
                     android:src="@drawable/add"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -51,14 +68,20 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/newrecmerg"
+            android:elevation="@dimen/newrecmerg"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/newrecmerg"
+                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/newrecmerg"
                     android:text="@string/steps"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/steps"
@@ -68,24 +91,32 @@
                     android:onClick="addStep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/orange"
+                    app:borderWidth="0dp"
                     android:src="@drawable/add"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/newrecmerg"
+            android:elevation="@dimen/newrecmerg"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/newrecmerg">
 
             <Button
                 android:onClick="selectPic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pictureoffood"
-
+                android:backgroundTint="@color/orange"
+                android:textColor="@color/black"
                 />
             <ImageView
                 android:id="@+id/pictureToBeUploaded"
@@ -97,7 +128,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/submit"
+            android:backgroundTint="@color/purple"
+            android:textColor="@color/white"
             android:onClick="submit"
+            android:padding="20dp"
+            android:layout_margin="@dimen/newrecmerg"
+            android:layout_gravity="center"
             />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

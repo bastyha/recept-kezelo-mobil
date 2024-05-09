@@ -54,7 +54,12 @@ public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.Re
             IngredientAdapter adapter = new IngredientAdapter( (ArrayList<Ingredient>) model.getIngredients());
             holder.ingredients.setAdapter(adapter);
 
-            holder.ingredients.setLayoutManager(new GridLayoutManager(mContext, 2));
+            holder.ingredients.setLayoutManager(new GridLayoutManager(mContext, 2){
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            });
         }else{
             holder.pic.setVisibility(View.VISIBLE);
             holder.line.setVisibility(View.GONE);

@@ -17,7 +17,7 @@
     <string name="passwagain">Jelszó ismét</string>
     <string name="picdesc">egy képe</string>
     <string name="ingredients">Hozzávalók:</string>
-    <string name="steps">Elkészítés lépései</string>
+    <string name="steps">Elkészítés lépései:</string>
     <string name="share_review">Oszd meg véleményed!</string>
     <string name="norecipeyet">Még nincs recepted!</string>
     <string name="recipename">A recept neve</string>
@@ -27,4 +27,8 @@
     <string name="amount">Mennyiség</string>
     <string name="unit">Mértékegyegység</string>
     <string name="step_description">Lépés leírása</string>
+    <string name="home">Home</string>
+    <string name="newrecipe">Új recept</string>
+    <string name="ownrecipe">Saját receptek</string>
+    <string name="logout">Kijelentkezés</string>
 </resources>

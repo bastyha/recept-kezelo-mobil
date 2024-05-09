@@ -2,31 +2,31 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menuBase">
+    android:id="@+id/menuBase"
+    >
     <item
         android:id="@+id/home"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/home"
         app:showAsAction="always"
 
         />
     <item
         android:id="@+id/newrecipe"
-        android:title="Új recept"
+        android:title="@string/newrecipe"
         android:icon="@drawable/add"
         app:showAsAction="ifRoom"
-
         />
     <item
         android:id="@+id/ownrecipe"
-        android:title="Saját receptek"
+        android:title="@string/ownrecipe"
 
         app:showAsAction="ifRoom"
 
         />
     <item
         android:id="@+id/logout"
-        android:title="Kijelentkezés"
+        android:title="@string/logout"
 
         app:showAsAction="never"
 

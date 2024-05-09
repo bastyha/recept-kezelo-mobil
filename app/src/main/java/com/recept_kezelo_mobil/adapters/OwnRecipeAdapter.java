@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.gson.Gson;
@@ -72,11 +73,21 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
 
         IngredientAdapter ingredientAdapter = new IngredientAdapter((ArrayList<Ingredient>) model.getIngredients());
         holder.ingredients.setAdapter(ingredientAdapter);
-        holder.ingredients.setLayoutManager(new GridLayoutManager( mContext, 2));
+        holder.ingredients.setLayoutManager(new GridLayoutManager( mContext, 2){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         StepAdapter stepAdapter = new StepAdapter((ArrayList<Step>) model.getSteps());
         holder.steps.setAdapter(stepAdapter);
-        holder.steps.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.steps.setLayoutManager(new LinearLayoutManager(mContext){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         holder.modify.setOnClickListener(v -> {
             Intent modifyRecipe = new Intent(mContext, NewRecipeActivity.class);
@@ -105,8 +116,8 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
         TextView timeInMinutes;
         RecyclerView ingredients;
         RecyclerView steps;
-        Button modify;
-        Button delete;
+        FloatingActionButton modify;
+        FloatingActionButton delete;
         public OwnRecipeHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipeName);

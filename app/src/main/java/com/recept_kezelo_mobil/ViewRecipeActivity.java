@@ -129,7 +129,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
 
                         timeInMinutes.setText(mSU.timeWriter(onSreen.getTimeInMinutes()));
-                        timeInMinutes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_timer_24, 0, 0, 0);
 
                         IngredientAdapter ingredientAdapter = new IngredientAdapter((ArrayList<Ingredient>) onSreen.getIngredients());
                         ingredients.setAdapter(ingredientAdapter);
