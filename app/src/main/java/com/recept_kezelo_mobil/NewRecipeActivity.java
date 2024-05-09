@@ -28,8 +28,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -172,7 +174,8 @@ public class NewRecipeActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        ingredients.setItemAnimator(null);
+        steps.setItemAnimator(null);
 
         pictureToBeUploaded = findViewById(R.id.pictureToBeUploaded);
         if(base!=null&&base.getImage_id()!=null &&!base.getImage_id().equals("")){
@@ -245,7 +248,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             return;
         }
         for(Ingredient item: ingredients1){
-            Log.d("Ingredients", String.format("%f %s %s", item.getAmount(), item.getUnit(), item.getNameOfIngredient()));
+
             if(item.getAmount()<0){
                 Toast.makeText(this, "Mennyiség ne legyen kisebb, mint 0!", Toast.LENGTH_SHORT).show();
                 return;
@@ -260,7 +263,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             }
         }
         for(Step item: steps1){
-            Log.d("Step", String.format("%s", item.getStepDescription()));
+
             if(item.getStepDescription()==null|| item.getStepDescription().trim().equals("")){
                 Toast.makeText(this, "Lépés leírása ne legyen üres", Toast.LENGTH_SHORT).show();
                 return;
@@ -288,6 +291,8 @@ public class NewRecipeActivity extends AppCompatActivity {
 
         }else if(base==null ||base.getImage_id().equals("")){
             toDB.setImage_id("");
+        }else{
+            toDB.setImage_id(base.getImage_id());
         }
 
         if(base==null){

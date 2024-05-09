@@ -1,13 +1,14 @@
 package com.recept_kezelo_mobil.adapters;
 
 import android.content.Context;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.recept_kezelo_mobil.R;
 import com.recept_kezelo_mobil.models.Ingredient;
-import com.recept_kezelo_mobil.models.Step;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,6 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
             @Override
             public void afterTextChanged(Editable s) {
                 models.get(holder.getBindingAdapterPosition()).setNameOfIngredient( holder.ingredientName.getText().toString());
-                Log.d("textChange", models.get(holder.getBindingAdapterPosition()).getNameOfIngredient());
             }
         });
 
@@ -78,7 +77,6 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
             @Override
             public void afterTextChanged(Editable s) {
                 models.get(holder.getBindingAdapterPosition()).setAmount(!holder.amount.getText().toString().equals("") ? Double.parseDouble(holder.amount.getText().toString()):0);
-                Log.d("textChange", String.valueOf(models.get(holder.getBindingAdapterPosition()).getAmount()));
             }
         });
         holder.unit.setText(model.getUnit());
@@ -96,10 +94,10 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
             @Override
             public void afterTextChanged(Editable s) {
                 models.get(holder.getBindingAdapterPosition()).setUnit( holder.unit.getText().toString());
-                Log.d("textChange", models.get(holder.getBindingAdapterPosition()).getUnit());
             }
         });
-
+        Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.recview_anim);
+        holder.itemView.startAnimation(animation);
     }
 
     @Override
@@ -120,16 +118,25 @@ public class AddIngredientAdapter extends RecyclerView.Adapter<AddIngredientAdap
             amount = itemView.findViewById(R.id.amount);
             unit = itemView.findViewById(R.id.unit);
             itemView.findViewById(R.id.removeitem).setOnClickListener( v -> {
-                removeItem(getLayoutPosition());
+                removeItem(itemView, getLayoutPosition());
             });
         }
     }
 
-    public void removeItem(int position){
+    public void removeItem(View v, int position){
 
-        models.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, models.size());
+        Animation anim = AnimationUtils.loadAnimation(v.getContext(), R.anim.recviewdel_anim);
+        anim.setDuration(500);
+        v.startAnimation(anim);
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                models.remove(position);
+                notifyItemRemoved( position);
+                notifyItemRangeChanged(position, models.size());
+            }
+        }, anim.getDuration());
 
     }
     public void addItem(@Nullable Ingredient item){

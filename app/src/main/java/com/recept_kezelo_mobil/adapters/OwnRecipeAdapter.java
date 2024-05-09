@@ -1,5 +1,6 @@
 package com.recept_kezelo_mobil.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -97,10 +98,16 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
 
         });
         holder.delete.setOnClickListener(v -> {
-            RecipeHandler.delete(model);
+            new AlertDialog.Builder(mContext)
+                    .setTitle("Törlés")
+                    .setMessage("Biztos ki akarod törölni ezt a receptet?")
+                    .setPositiveButton("Igen", (dialog, which) -> {
+                        RecipeHandler.delete(model);
 
-            mContext.startActivity(new Intent(mContext, OwnRecipeActivity.class));
-            ((AppCompatActivity) mContext).finish();
+                        mContext.startActivity(new Intent(mContext, OwnRecipeActivity.class));
+                        ((AppCompatActivity) mContext).finish();
+
+                    }).setNegativeButton("Mégse", null).show();
         });
 
     }

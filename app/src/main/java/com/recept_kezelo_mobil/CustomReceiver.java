@@ -3,7 +3,9 @@ package com.recept_kezelo_mobil;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
 import com.recept_kezelo_mobil.models.Recipe;
 import com.recept_kezelo_mobil.serverhandlers.RecipeHandler;
 
@@ -13,16 +15,7 @@ import java.util.Random;
 public class CustomReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        RecipeHandler.readAll()
-                .addOnCompleteListener(task -> {
-                   if (task.isSuccessful()){
-                       List<Recipe> recipeList = task.getResult().toObjects(Recipe.class);
-                       if(recipeList.size()>0){
-                           Recipe chosen = recipeList.get( new Random().nextInt(recipeList.size()));
-                           new HighNoonFood(context).send("Készíts magadnak: "+chosen.getName(), chosen.getId());
-                       }
-                   }
-                });
+        new HighNoonFood(context).send("Készíts magadnak valamit");
 
 
 

@@ -1,11 +1,13 @@
 package com.recept_kezelo_mobil.adapters;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,9 +55,10 @@ public class AddStepAdapter extends RecyclerView.Adapter<AddStepAdapter.AddStepH
             @Override
             public void afterTextChanged(Editable s) {
                 models.get(holder.getBindingAdapterPosition()).setStepDescription( holder.stepDescription.getText().toString());
-                Log.d("textChange", models.get(holder.getBindingAdapterPosition()).getStepDescription());
             }
         });
+        Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.recview_anim);
+        holder.itemView.startAnimation(animation);
     }
 
     @Override
@@ -72,14 +75,26 @@ public class AddStepAdapter extends RecyclerView.Adapter<AddStepAdapter.AddStepH
             stepNumber = itemView.findViewById(R.id.stepNumber);
             stepDescription = itemView.findViewById(R.id.stepDescription);
             itemView.findViewById(R.id.removeitem).setOnClickListener( v -> {
-                removeItem(getBindingAdapterPosition());
+                removeItem(itemView , getBindingAdapterPosition());
             });
         }
     }
-    public void removeItem(int position){
-        models.remove(position);
-        notifyItemRemoved( position);
-        notifyItemRangeChanged(position, models.size());
+    public void removeItem(View v, int position){
+        Animation anim = AnimationUtils.loadAnimation(v.getContext(), R.anim.recviewdel_anim);
+        anim.setDuration(500);
+        v.startAnimation(anim);
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                models.remove(position);
+                notifyItemRemoved( position);
+                notifyItemRangeChanged(position, models.size());
+            }
+        }, anim.getDuration());
+
+
+
     }
     public void addItem(@Nullable Step item){
         if(item==null){

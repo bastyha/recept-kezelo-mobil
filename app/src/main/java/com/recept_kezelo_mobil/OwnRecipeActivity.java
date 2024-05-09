@@ -72,7 +72,7 @@ public class OwnRecipeActivity extends AppCompatActivity {
                 .addOnCompleteListener(recipeTask->{
                    if (recipeTask.isSuccessful()){
                        recipesList= (ArrayList<Recipe>) recipeTask.getResult().toObjects(Recipe.class);
-                       Log.d("OwnRec", String.valueOf(recipesList.size()));
+
                        if (recipesList.size()==0){
                            norecipes.setVisibility(View.VISIBLE);
                            recipes.setVisibility(View.GONE);

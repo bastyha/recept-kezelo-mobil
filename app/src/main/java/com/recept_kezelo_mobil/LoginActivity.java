@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, task-> {
 
                             if(task.isSuccessful()){
-                                Log.d("Auth", task.getResult().getUser().getUid());
+
                                 startActivity(new Intent(this, MainActivity.class));
                                 finish();
                             }else {

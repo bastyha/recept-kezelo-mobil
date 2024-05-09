@@ -52,7 +52,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingredients"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    />
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:onClick="addIngredient"
                     android:layout_gravity="center"
@@ -86,7 +87,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/steps"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:onClick="addStep"
                     android:layout_width="wrap_content"

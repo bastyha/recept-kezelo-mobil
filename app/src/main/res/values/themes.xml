@@ -4,6 +4,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/dark_orange</item>
+        <item name="colorPrimaryVariant">@color/orange</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textAlignment">center</item>
 

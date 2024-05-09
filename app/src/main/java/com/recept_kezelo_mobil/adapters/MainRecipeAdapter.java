@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,6 @@ import java.util.ArrayList;
 public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.RecipeHolder> {
     Context mContext;
     ArrayList<Recipe> models;
-
 
     public MainRecipeAdapter(Context mContext, ArrayList<Recipe> models) {
         this.mContext = mContext;
@@ -73,6 +73,10 @@ public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.Re
             viewRecipe.putExtra("RECIPE", model.getId());
             mContext.startActivity(viewRecipe);
         });
+
+
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.recview_anim);
+        holder.itemView.startAnimation(animation);
 
     }
 

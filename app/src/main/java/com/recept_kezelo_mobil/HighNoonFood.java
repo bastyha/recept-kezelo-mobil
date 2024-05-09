@@ -1,5 +1,6 @@
 package com.recept_kezelo_mobil;
 
+import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,7 +20,7 @@ import com.recept_kezelo_mobil.models.Recipe;
 import java.util.List;
 import java.util.Random;
 
-public class HighNoonFood  {
+public class HighNoonFood   {
         private static final String  CHANNEL_ID="recept_kezelo";
         private NotificationManager manager;
         Context mContext;
@@ -42,9 +44,9 @@ public class HighNoonFood  {
             channel.setLightColor(Color.argb(1, 160, 0, 160));
             manager.createNotificationChannel(channel);
         }
-        public  void send(String message, String recipeId){
-            Intent intent = new Intent(mContext, ViewRecipeActivity.class);
-            intent.putExtra("RECIPE", recipeId);
+        public  void send(String message){
+            Intent intent = new Intent(mContext, MainActivity.class);
+            //intent.putExtra("RECIPE", recipeId);
             PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
                     .setContentTitle("Ebéd idő lassan")
@@ -52,6 +54,7 @@ public class HighNoonFood  {
                     .setSmallIcon(R.drawable.recept_icon)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
+
             manager.notify(0, builder.build());
 
 
