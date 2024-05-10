@@ -16,6 +16,10 @@ import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.recept_kezelo_mobil.adapters.MainRecipeAdapter;
@@ -78,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                         MainRecipeAdapter adapter = new MainRecipeAdapter(this, recipesList);
                         recipesRV.setAdapter(adapter);
-                        recipesRV.setLayoutManager(new LinearLayoutManager(this));
+                        FlexboxLayoutManager flm = new FlexboxLayoutManager(this);
+                        flm.setJustifyContent(JustifyContent.SPACE_EVENLY);
+                        flm.setFlexWrap(FlexWrap.WRAP);
+
+                        recipesRV.setLayoutManager(flm);
 
                     }else {
                         Log.e("RecipeAdd", "onCreate: ",task.getException() );
