@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +65,7 @@ public class OwnRecipeAdapter extends RecyclerView.Adapter<OwnRecipeAdapter.OwnR
     public void onBindViewHolder(@NonNull OwnRecipeHolder holder, int position) {
         Recipe model = models.get(holder.getBindingAdapterPosition());
         holder.recipeName.setText(model.getName());
+
         if(model.getImage_id()!=null&& !Objects.equals(model.getImage_id(), "")){
             holder.imageView.setVisibility(View.VISIBLE);
             mSU.getDownloadUrl(model.getImage_id(), holder.imageView);

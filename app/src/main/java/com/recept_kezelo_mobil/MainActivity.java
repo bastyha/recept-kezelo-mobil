@@ -90,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent  = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,11);
+        calendar.set(Calendar.HOUR_OF_DAY,14);
         calendar.set(Calendar.MINUTE,0);
         calendar.set(Calendar.SECOND,0);
-
+        if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)>calendar.get(Calendar.HOUR_OF_DAY)){
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),3* AlarmManager.INTERVAL_HOUR, pendingIntent);
 
     }

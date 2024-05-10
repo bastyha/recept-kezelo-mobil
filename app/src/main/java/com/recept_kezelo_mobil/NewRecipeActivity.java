@@ -26,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -96,7 +97,6 @@ public class NewRecipeActivity extends AppCompatActivity {
     RecyclerView steps;
     ImageView pictureToBeUploaded;
     Uri picUri;
-
     ServerUtil mSU;
 
 
@@ -107,6 +107,7 @@ public class NewRecipeActivity extends AppCompatActivity {
     ActivityResultLauncher<PickVisualMediaRequest> pickPic =
             registerForActivityResult(new PickCorrectPic(), uri ->{
                 if(uri!=null){
+                    pictureToBeUploaded.setVisibility(View.VISIBLE);
                     Picasso.get().load((Uri) uri).into(pictureToBeUploaded);
                 }
                 picUri = uri;
@@ -178,7 +179,9 @@ public class NewRecipeActivity extends AppCompatActivity {
         steps.setItemAnimator(null);
 
         pictureToBeUploaded = findViewById(R.id.pictureToBeUploaded);
+        pictureToBeUploaded.setVisibility(View.GONE);
         if(base!=null&&base.getImage_id()!=null &&!base.getImage_id().equals("")){
+            pictureToBeUploaded.setVisibility(View.VISIBLE);
             mSU.getDownloadUrl(base.getImage_id(), pictureToBeUploaded);
         }
     }
@@ -247,6 +250,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             Toast.makeText(this, "1 lépés kötelező", Toast.LENGTH_SHORT).show();
             return;
         }
+
         for(Ingredient item: ingredients1){
 
             if(item.getAmount()<0){
@@ -277,7 +281,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         toDB.setOwner(FirebaseAuth.getInstance().getCurrentUser().getUid());
         toDB.setIngredients(ingredients1);
         toDB.setSteps(steps1);
-
+        Log.d("SUBMIT", "Before pic upload");
         if(picUri!=null){
             Picture picture = new Picture();
             picture.setUploader(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -289,19 +293,20 @@ public class NewRecipeActivity extends AppCompatActivity {
                 toDB.setImage_id(PictureHandler.update(picture, picUri));
             }
 
-        }else if(base==null ||base.getImage_id().equals("")){
+        }else if(base==null || base.getImage_id()==null || base.getImage_id().equals("")){
             toDB.setImage_id("");
         }else{
             toDB.setImage_id(base.getImage_id());
         }
 
-        if(base==null){
+        if(base==null || base.getId()==null ||base.getId().equals("")){
 
             toDB.setId("");
         }else{
             toDB.setId(base.getId());
 
         }
+        Log.d("SUBMIT", "Before recipe upload");
         RecipeHandler.create(toDB)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){

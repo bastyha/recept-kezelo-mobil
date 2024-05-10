@@ -75,11 +75,11 @@ public class RegisterActivity extends AppCompatActivity {
         Editable passw2 = ((TextInputEditText) findViewById(R.id.passwordAgainEt)).getText();
         Editable firstname = ((TextInputEditText) findViewById(R.id.firstnameET)).getText();
         Editable lastname  = ((TextInputEditText) findViewById(R.id.lastnameET)).getText();
-        if( email     != null &&
-            passw1    != null &&
-            passw2    != null &&
-            firstname != null &&
-            lastname  != null &&
+        if( email     != null && !email.toString().equals("") &&
+            passw1    != null && !passw1.toString().equals("") &&
+            passw2    != null && !passw2.toString().equals("") &&
+            firstname != null && !firstname.toString().equals("") &&
+            lastname  != null && !lastname.toString().equals("") &&
                 passw1.toString().equals(passw2.toString())){
             mAuth.createUserWithEmailAndPassword(email.toString(), passw1.toString())
                     .addOnCompleteListener(this, task-> {
@@ -103,14 +103,20 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     });
                         }else {
-                            Log.e("Auth", "onComplete: ", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.getException().getMessage().equals("The email address is already in use by another account.")){
+                                Toast.makeText(this, "Ilyen email már van", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.e("Auth", "onComplete: ", task.getException());
+                            }
                         }
 
                     });
 
 
+        }else{
+            Toast.makeText(this, "Valamit nem adtál megm vagy rövid a jelszó!", Toast.LENGTH_SHORT).show();
         }
 
 

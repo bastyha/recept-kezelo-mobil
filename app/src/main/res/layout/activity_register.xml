@@ -6,6 +6,20 @@
     android:padding="10dp"
 
     >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toTopOf="@id/email"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/registerText"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email"
@@ -15,19 +29,21 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:hint="@string/email"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerText"
 
-        app:layout_constraintVertical_bias="0.110000014">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textAlignment="viewStart"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -37,18 +53,19 @@
 
         android:layout_height="wrap_content"
         android:hint="@string/passw"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/passwordAgain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email"
-
-        app:layout_constraintVertical_bias="0.13">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+
+            android:inputType="textPassword"
+            android:textAlignment="viewStart"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,17 +75,17 @@
 
         android:layout_height="wrap_content"
         android:hint="@string/passwagain"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password"
-
-        app:layout_constraintVertical_bias="0.19">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordAgainEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/passwordAgain"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
@@ -87,7 +104,7 @@
             android:id="@+id/firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
+
             style="@style/Platform.MaterialComponents.Light"
             android:hint="@string/firstname"
             android:layout_weight="1"
@@ -97,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textAlignment="viewStart"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textAlignment="viewStart"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,12 +147,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
         android:gravity="center"
+        android:id="@+id/buttons"
         >
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register"
             android:onClick="register"
+            android:layout_marginEnd="10dp"
             />
         <Button
             android:layout_width="wrap_content"
